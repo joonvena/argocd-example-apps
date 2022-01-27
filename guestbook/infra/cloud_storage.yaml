@@ -1,0 +1,16 @@
+apiVersion: storage.gcp.crossplane.io/v1alpha3
+kind: Bucket
+metadata:
+  name: test-bucket
+  labels:
+    environment: "dev"
+  annotations:
+    crossplane.io/external-name: crossplane-test-bucket-5393
+spec:
+  location: europe-north1
+  storageClass: REGIONAL
+  versioningEnabled: true
+  providerConfigRef:
+    name: default
+  deletionPolicy: Delete
+
