@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ template "helm-guestbook.fullname" . }}
+  labels:
+    app: {{ template "helm-guestbook.name" . }}
+    chart: {{ template "helm-guestbook.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  ingressClassName: "nginx"
+  rules:
+  - host: guestbook.172.104.255.16.xip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+         service:
+          name: {{ template "helm-guestbook.fullname" . }}
+          port:
+            number: 80
